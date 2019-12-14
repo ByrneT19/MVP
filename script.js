@@ -22,8 +22,7 @@ function gpsLoc(latLong) {
     fetch(mapUrl)
     .then(response => {
         if(!response.ok) {
-            throw new Error('Sorry no traffic data was found. Please refine your search. Try formatting it by town,' + 
-            'street and postcode')
+            throw new Error(response.statusText)
         }
         return response.json()
     })
@@ -44,12 +43,12 @@ function showResult(responseJson) {
     for(i = 0; i < responseJson.list[0].weather.length; i++) {
         $('#weather-container').append(`
         <h2>Weather at Location</h2>
-        <h3>${responseJson.list[0].weather[0].main}</h3>        
-        <div id="icon">
+              <div id="icon">
             <img id="yunHua" src="${iconUrl}" alt="Weather icon">
         </div>
         <p>Current temperature: ${Math.floor(responseJson.list[0].main.temp)}&#8451</p>
         <p>Feels like: ${Math.floor(responseJson.list[0].main.feels_like)}&#8451</p>
+        <h3>${responseJson.list[0].weather[0].main}</h3>  
         <p>${responseJson.list[0].weather[0].description}</p>
         `)
     }
